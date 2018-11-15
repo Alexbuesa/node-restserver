@@ -43,10 +43,7 @@ app.get('/usuario', verificaToken, (req, res) => {
                     conteo
                 });
             });
-
-
-
-        })
+        });
 
 });
 
@@ -63,6 +60,13 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     usuario.save((err, usuarioDB) => {
         if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioDB) {
             return res.status(400).json({
                 ok: false,
                 err
